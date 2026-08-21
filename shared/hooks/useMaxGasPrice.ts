@@ -1,0 +1,40 @@
+import { useWrapperSWR } from '@knine-sdk/react';
+
+import { getFeeData } from 'utils/getFeeData';
+import { STRATEGY_LAZY } from 'utils/swrStrategies';
+
+import { useCurrentStaticRpcProvider } from './use-current-static-rpc-provider';
+import { useWeb3 } from 'rnb-web3/web3-react';
+
+export const useMaxGasPrice = () => {
+  const { chainId, active } = useWeb3();
+
+  const { staticRpcProvider } = useCurrentStaticRpcProvider();
+
+  const swr = useWrapperSWR(
+    active ? ['swr:max-gas-price', chainId] : null,
+    async () => {
+      const { maxFeePerGas } = await getFeeData(staticRpcProvider);
+      return maxFeePerGas;
+    },
+    STRATEGY_LAZY,
+  );
+
+  return {
+    get maxGasPrice() {
+      return swr.data;
+    },
+    get initialLoading() {
+      return swr.initialLoading;
+    },
+    get error() {
+      return swr.error;
+    },
+    get loading() {
+      return swr.loading;
+    },
+    update() {
+      return swr.update;
+    },
+  };
+};

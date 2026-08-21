@@ -1,0 +1,23 @@
+diff --git a/node_modules/@rnb-web3/ui-react/dist/components/WCWarnBanner/WCWarnBannerContextProvider.js b/node_modules/@rnb-web3/ui-react/dist/components/WCWarnBanner/WCWarnBannerContextProvider.js
+index 4a7a147..255762a 100644
+--- a/node_modules/@rnb-web3/ui-react/dist/components/WCWarnBanner/WCWarnBannerContextProvider.js
++++ b/node_modules/@rnb-web3/ui-react/dist/components/WCWarnBanner/WCWarnBannerContextProvider.js
+@@ -29,7 +29,17 @@ const WCWarnBannerContextProvider = ({
+       return;
+     }
+     portalTarget.style.position = "relative";
+-    portalTarget.style.zIndex = "10000";
++    portalTarget.style.zIndex = "10";
++    const fn = (mediaQuery) => {
++      if (mediaQuery.matches) {
++        portalTarget.style.paddingLeft = "0";
++      } else {
++        portalTarget.style.paddingLeft = "85px";
++      }
++    };
++    const mediaQuery = window.matchMedia("(max-width: 900px)");
++    fn(mediaQuery);
++    mediaQuery.addEventListener("change", () => fn(mediaQuery));
+     document.body.insertAdjacentElement("afterbegin", portalTarget);
+     return () => {
+       document.body.removeChild(portalTarget);

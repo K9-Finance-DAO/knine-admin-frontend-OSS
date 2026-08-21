@@ -1,0 +1,26 @@
+default:
+  image: node:20.12.1
+
+deploy_preview:
+  stage: deploy
+  except:
+    - develop
+  variables:
+    NODE_OPTIONS: --max_old_space_size=3584
+  script:
+    - npm install --global vercel
+    - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
+    - vercel build --token=$VERCEL_TOKEN
+    - vercel deploy --prebuilt --token=$VERCEL_TOKEN
+
+deploy:
+  stage: deploy
+  only:
+    - develop
+  variables:
+    NODE_OPTIONS: --max_old_space_size=3584
+  script:
+    - npm install --global vercel
+    - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+    - vercel build --prod --token=$VERCEL_TOKEN
+    - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN

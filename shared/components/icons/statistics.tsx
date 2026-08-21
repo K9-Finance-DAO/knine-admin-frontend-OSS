@@ -1,0 +1,22 @@
+import { forwardRef, Ref, SVGProps } from 'react';
+
+export const Statistics = forwardRef(
+  (props: SVGProps<SVGSVGElement>, svgRef: Ref<SVGSVGElement>) => {
+    return (
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        ref={svgRef}
+        {...props}
+      >
+        <path
+          d="M2.5 10.75H7V16.75H2.5V10.75ZM13 7H17.5V16.75H13V7ZM7.75 3.25H12.25V16.75H7.75V3.25ZM4 12.25V15.25H5.5V12.25H4ZM9.25 4.75V15.25H10.75V4.75H9.25ZM14.5 8.5V15.25H16V8.5H14.5Z"
+          fill="current"
+        />
+      </svg>
+    );
+  },
+);

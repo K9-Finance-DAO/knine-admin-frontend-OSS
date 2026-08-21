@@ -1,0 +1,15 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 127.0.0.1:3009:3005
+    env_file:
+      - .env.development
+    networks:
+      k9-admin-frontend:
+
+
+networks:
+  k9-admin-frontend:
